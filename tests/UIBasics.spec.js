@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test.only('First Playwright Test', async ({browser})=> 
+test('First Playwright Test', async ({browser})=> 
 {
 
 // chrome - plugins/cookies
@@ -81,6 +81,40 @@ const page = await context.newPage();
 await page.goto("http://cnn.com");
 
 
+
+});
+
+/**
+ * 
+ * login credentials
+ * 
+ * email: yehey@yehey.com
+ * password: thisisPassw0rd$
+ */
+
+test.only('Checkout Test Case', async ({browser})=>
+{
+
+// chrome - plugins/cookies
+// new context means new incognito or new instance
+const context = await browser.newContext();
+const page = await context.newPage();
+
+//Login Page
+
+const fldUserEmail = page.locator('#userEmail');
+const fldUserPassword = page.locator('#userPassword');
+const btnLogin = page.locator('#login');
+
+await page.goto("https://rahulshettyacademy.com/client/");
+
+await fldUserEmail.fill("yehey@yehey.com");
+await fldUserPassword.fill("thisisPassw0rd$");
+await btnLogin.click();
+
+await page.waitForLoadState('networkidle');
+const titles = await page.locator(".card-body b").allTextContents();
+console.log(titles);
 
 });
 
