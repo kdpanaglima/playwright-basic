@@ -106,6 +106,9 @@ const fldUserEmail = page.locator('#userEmail');
 const fldUserPassword = page.locator('#userPassword');
 const btnLogin = page.locator('#login');
 
+const products = page.locator(".card-body");
+const productName = "iphone 13 pro";
+
 await page.goto("https://rahulshettyacademy.com/client/");
 
 await fldUserEmail.fill("yehey@yehey.com");
@@ -115,6 +118,21 @@ await btnLogin.click();
 await page.waitForLoadState('networkidle');
 const titles = await page.locator(".card-body b").allTextContents();
 console.log(titles);
+
+// Click add to cart on a product
+const count = await products.count();
+for(let i = 0; i < count; i++){
+    if(await products.nth(i).locator("b").textContent() == productName){ //chaining locator
+        //add product to cart
+        await products.nth(i).locator("text= Add To Cart").click();
+        break;
+    } else {
+        console.log("Not expected");
+    }
+} 
+
+
+
 
 });
 
